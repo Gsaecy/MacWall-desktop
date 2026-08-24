@@ -334,6 +334,12 @@ window.MacEffectsFactory = function () {
     var i = Math.floor(x), f = x - i, a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
     return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * f) + ',' + Math.round(a[1] + (b[1] - a[1]) * f) + ',' + Math.round(a[2] + (b[2] - a[2]) * f) + ')';
   }
+  function emberRGBA(p, alpha) {
+    var stops = [[255, 246, 224], [255, 194, 71], [255, 115, 25], [237, 59, 15], [89, 31, 8]];
+    var x = Math.max(0, Math.min(1, p)) * (stops.length - 1);
+    var i = Math.floor(x), f = x - i, a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
+    return 'rgba(' + Math.round(a[0] + (b[0] - a[0]) * f) + ',' + Math.round(a[1] + (b[1] - a[1]) * f) + ',' + Math.round(a[2] + (b[2] - a[2]) * f) + ',' + alpha.toFixed(3) + ')';
+  }
   function drawEmbers(t) {
     for (var i = 0; i < embers.length; i++) {
       var e = embers[i];
@@ -344,19 +350,33 @@ window.MacEffectsFactory = function () {
       var lifeP = e.p;
       var alpha = lifeP < 0.05 ? lifeP / 0.05 : (lifeP > 0.68 ? Math.max(0, 0.85 * (0.76 - lifeP) / 0.08 + Math.sin(lifeP * 60) * 0.15) : 0.9);
       alpha = Math.max(0, Math.min(1, alpha));
-      // 拖尾
-      ctx.strokeStyle = emberColor(lifeP * 0.55);
-      ctx.globalAlpha = alpha * 0.5;
-      ctx.lineWidth = e.r * dpr * 0.5;
+
+      // 火光拖尾：沿运动方向向后拉出渐隐光痕（从亮核到透明，非直棍）
+      var mvx = e.lx !== undefined ? px - e.lx : Math.sin(t / 700 + e.sw) * 0.4;
+      var mvy = e.ly !== undefined ? py - e.ly : -1;
+      var ml = Math.sqrt(mvx * mvx + mvy * mvy);
+      if (ml < 0.4) { mvx = Math.sin(t / 700 + e.sw) * 0.4; mvy = -1; ml = 1; }
+      mvx /= ml; mvy /= ml;
+      var tailLen = 14 + e.r * 8;
+      var tx = px - mvx * tailLen, ty = py - mvy * tailLen;
+      var grad = ctx.createLinearGradient(px, py, tx, ty);
+      grad.addColorStop(0, emberRGBA(lifeP, alpha * 0.9));
+      grad.addColorStop(0.45, emberRGBA(Math.max(0, lifeP - 0.25), alpha * 0.38));
+      grad.addColorStop(1, emberRGBA(Math.max(0, lifeP - 0.5), 0));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = Math.max(1.2, e.r * dpr * 1.7);
       ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - Math.sin(t / 700 + e.sw) * 10, py + 8); ctx.stroke();
-      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(tx, ty); ctx.stroke();
+
+      // 圆形光点：柔光光晕 + 高亮核
       glowCircle(ctx, px, py, e.r * 4 * dpr, emberColor(lifeP).match(/\d+/g).join(','), alpha * 0.5);
       ctx.fillStyle = emberColor(Math.max(0, lifeP - 0.15));
       ctx.globalAlpha = alpha;
       ctx.beginPath(); ctx.arc(px, py, e.r * dpr, 0, TAU); ctx.fill();
       ctx.globalAlpha = 1;
-      if (e.p >= 1) { e.p = 0; e.x = Math.random(); e.rise = 0.07 + Math.random() * 0.14; }
+
+      e.lx = px; e.ly = py;
+      if (e.p >= 1) { e.p = 0; e.x = Math.random(); e.rise = 0.07 + Math.random() * 0.14; e.lx = undefined; e.ly = undefined; }
     }
   }
 

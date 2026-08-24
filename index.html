@@ -358,6 +358,8 @@ const WALL_MAP = {
   embers:     ['site-assets/mouse-wallpaper.jpg',   'Embers'],
   hearts:     ['site-assets/w6-girl.jpg',           'Hearts']
 };
+// 预加载全部演示壁纸，切换时立即显示
+Object.values(WALL_MAP).forEach(([img]) => { const im = new Image(); im.src = img; });
 const wallFx = MacEffectsFactory();
 wallFx.init(document.getElementById('fx1'), null);
 const wp1 = document.getElementById('wp1');
