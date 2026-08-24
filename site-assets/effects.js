@@ -347,14 +347,14 @@ window.MacEffectsFactory = function () {
       // 拖尾
       ctx.strokeStyle = emberColor(lifeP * 0.55);
       ctx.globalAlpha = alpha * 0.5;
-      ctx.lineWidth = e.r * dpr * dispScale * 0.5;
+      ctx.lineWidth = e.r * dpr * 0.5;
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - Math.sin(t / 700 + e.sw) * 10, py + 8); ctx.stroke();
       ctx.globalAlpha = 1;
-      glowCircle(ctx, px, py, e.r * 4 * dpr * dispScale, emberColor(lifeP).match(/\d+/g).join(','), alpha * 0.5);
+      glowCircle(ctx, px, py, e.r * 4 * dpr, emberColor(lifeP).match(/\d+/g).join(','), alpha * 0.5);
       ctx.fillStyle = emberColor(Math.max(0, lifeP - 0.15));
       ctx.globalAlpha = alpha;
-      ctx.beginPath(); ctx.arc(px, py, e.r * dpr * dispScale, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, e.r * dpr, 0, TAU); ctx.fill();
       ctx.globalAlpha = 1;
       if (e.p >= 1) { e.p = 0; e.x = Math.random(); e.rise = 0.07 + Math.random() * 0.14; }
     }
