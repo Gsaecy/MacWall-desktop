@@ -1,77 +1,78 @@
-# 麦壳壁纸 MacWall-desktop
+# MacWall Desktop Engine Exchange
 
-> 麦壳壁纸 MacWall 官网（[macwall.skin](https://macwall.skin)）的 GitHub 子项目：**桌面引擎技术交流站**——收录公开开源的壁纸引擎效果代码，提供在线效果演示与技术交流。
+> A sub-project of the MacWall website ([macwall.skin](https://macwall.skin)): a **Desktop Engine Exchange** — a curated collection of open-source wallpaper engine effect code, with live demos and community feedback.
 
-本站公开的内容：窗口效果演示页（`index.html`）、粒子效果引擎（`site-assets/effects.js`）与全部演示代码。完整的壁纸产品与壁纸展示效果，请访问官网 macwall.skin。
+Everything in this repository is public: the demo page (`index.html`), the particle effect engine (`site-assets/effects.js`) and all demo code. The full wallpaper product and showcase live on the official website, macwall.skin.
 
-## ✨ 效果演示（代码开源）
+## ✨ Live demos (open source)
 
-在线体验：[https://gsaecy.github.io/MacWall-desktop/](https://gsaecy.github.io/MacWall-desktop/)（GitHub Pages，开启方式见下方「部署」）
+Try it online: [https://gsaecy.github.io/MacWall-desktop/](https://gsaecy.github.io/MacWall-desktop/) (GitHub Pages — see Deployment below)
 
-| 效果 | 说明 | 壁纸展示 |
+| Effect | Description | Full showcase |
 |---|---|---|
-| 壁纸循环特效 | 雪花 / 花瓣 / 落叶 / 蒲公英 / 萤火虫 / 泡泡 / 火星 / 爱心，实时切换预览 | [官网查看](https://macwall.skin) |
-| 鼠标互动特效 | 星尘光尾II / 七彩蝴蝶 / 火星四溅 / 萤火光迹，跟随真实鼠标轨迹渲染 | [官网查看](https://macwall.skin) |
-| 音乐律动时钟 | 玲珑幻彩 / 时空波纹 / 霓虹灯牌，本页以模拟节奏驱动律动 | [官网查看](https://macwall.skin) |
+| Wallpaper effects | Snow, petals, leaves, dandelions, fireflies, bubbles, embers, hearts — live switching | [Official site](https://macwall.skin) |
+| Mouse effects | Stardust Trail II, Rainbow Butterflies, Spark Burst, Firefly Trails — follow your real cursor | [Official site](https://macwall.skin) |
+| Music-reactive clock | Crystal Glow, Ripples, Neon Sign — driven by a simulated music rhythm | [Official site](https://macwall.skin) |
 
-> 效果引擎 `site-assets/effects.js` 与演示页 `index.html` 全部公开开源，欢迎研究、参考与二次开发；完整壁纸展示效果链接到官网。
+> The effect engine `site-assets/effects.js` and the demo page `index.html` are fully open source — study them, remix them, and share what you build.
 
-## 📚 收录的开源壁纸引擎
+## 📚 Open-source wallpaper engines
 
-本站收录以下公开开源的壁纸引擎项目（详见演示页「开源收录」区）：
+A curated collection of publicly available wallpaper engine projects (also listed on the demo page):
 
-| 项目 | 平台 | 说明 |
+| Project | Platform | Notes |
 |---|---|---|
-| [MacWall-desktop](https://github.com/Gsaecy/MacWall-desktop) | Web | 本仓库：粒子特效引擎与 macOS 窗口演示页，公开开源 |
-| [Lively Wallpaper](https://github.com/rocksdanister/lively) | Windows | 开源动态壁纸引擎（GIF / 视频 / 网页） |
-| [WinDynamicDesktop](https://github.com/t1m0thyj/WinDynamicDesktop) | Windows | 动态壁纸（macOS Dynamic HEIF 壁纸方案） |
-| [dynamic-wallpaper](https://github.com/adi1090x/dynamic-wallpaper) | Linux | 动态壁纸脚本合集（GNOME / KDE） |
-| [playground-macos](https://github.com/Renovamen/playground-macos) | Web | 网页版 macOS 桌面模拟（本仓库 Dock 图标来源，MIT） |
-| [macos-web](https://github.com/PuruVJ/macos-web) | Web | 网页版 macOS 桌面模拟（MIT） |
+| [MacWall-desktop](https://github.com/Gsaecy/MacWall-desktop) | Web | This repository: particle effect engine and macOS window demos, open source |
+| [Lively Wallpaper](https://github.com/rocksdanister/lively) | Windows | Open-source animated desktop engine (GIF / video / web) |
+| [WinDynamicDesktop](https://github.com/t1m0thyj/WinDynamicDesktop) | Windows | Dynamic wallpapers (macOS Dynamic HEIF scheme) |
+| [dynamic-wallpaper](https://github.com/adi1090x/dynamic-wallpaper) | Linux | Dynamic wallpaper scripts (GNOME / KDE) |
+| [playground-macos](https://github.com/Renovamen/playground-macos) | Web | macOS desktop in the browser (source of this repo's Dock icons, MIT) |
+| [macos-web](https://github.com/PuruVJ/macos-web) | Web | macOS desktop in the browser (MIT) |
 
-> 收录更多开源壁纸引擎？直接提 [Issue](https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml) 或参与 Discussions 交流。
+> Want another engine listed? Open an [issue](https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml) or join the discussion.
 
-## 💬 公开留言模块
+## 💬 Feedback module
 
-留言模块已内置在演示页底部，数据存放于 GitHub 公共空间，完全公开：
+The demo page has a public feedback section backed by GitHub:
 
-- **开箱即用（无需配置）**：页面提供「📝 留言 / 提反馈（Issue 表单）」按钮，点击即打开 [`feedback.yml`](.github/ISSUE_TEMPLATE/feedback.yml) 留言表单；
-- **内嵌评论区（可选，2 分钟配置）**：使用 [giscus](https://giscus.app/) 把 GitHub Discussions 嵌入页面：
+- **Works out of the box**: visitors click "Leave feedback" to open the [`feedback.yml`](.github/ISSUE_TEMPLATE/feedback.yml) issue form;
+- **Optional embedded comments (2-minute setup for the repo owner)**: use [giscus](https://giscus.app/) to embed GitHub Discussions into the page:
 
-1. 仓库 Settings → General → Features 勾选 **Discussions**；
-2. 安装 [giscus App](https://github.com/apps/giscus) 并授权本仓库；
-3. 打开 [giscus.app](https://giscus.app)，填入仓库 `Gsaecy/MacWall-desktop`，按提示选择留言分类（如 `Announcements`），获得 `repoId` 与 `categoryId`；
-4. 编辑 [`index.html`](index.html) 底部 `GISCUS_CONFIG`：把 `ready` 改为 `true`，填入 `repoId`、`categoryId`（分类名如非 `Announcements` 请同步修改）。
+1. Repository Settings → General → Features → enable **Discussions**;
+2. Install the [giscus app](https://github.com/apps/giscus) and authorize this repository;
+3. Open [giscus.app](https://giscus.app), fill in `Gsaecy/MacWall-desktop`, pick the comments category (e.g. `Announcements`) and copy the `repoId` and `categoryId`;
+4. Edit the `GISCUS_CONFIG` at the bottom of [`index.html`](index.html): set `ready` to `true` and fill in `repoId` and `categoryId` (update the category name if it is not `Announcements`).
 
-完成后刷新页面，留言区直接嵌入，用户登录 GitHub 即可留言、点赞与回复。
+Once configured, visitors can comment, react and reply right on the page.
 
-## 🚀 部署（GitHub Pages）
+## 🚀 Deployment (GitHub Pages)
 
-仓库 Settings → Pages → Build and deployment 选择 **Deploy from a branch**，Branch 选 `main` / `(root)`，保存后访问：
+Repository Settings → Pages → Build and deployment → **Deploy from a branch**, select `main` / `(root)` and save:
 
 ```
 https://gsaecy.github.io/MacWall-desktop/
 ```
 
-## 📁 仓库结构
+## 📁 Structure
 
 ```text
-├── index.html                    # 效果演示 + 开源收录 + 公开留言（GitHub Pages，开源）
-├── site-assets/                  # 效果引擎、壁纸图与特效素材（开源）
-│   ├── effects.js                # 粒子效果引擎（MacEffectsFactory）
-│   ├── petals/ leaves/           # 花瓣 / 落叶素材
-│   ├── mac-icons/                # Dock 图标（MIT，见目录内 LICENSE）
-│   └── *.jpg                     # 演示壁纸
-└── .github/ISSUE_TEMPLATE/       # 留言 / 反馈 Issue 模板
+├── index.html                    # Effect demos + engine collection + feedback (GitHub Pages, open source)
+├── site-assets/                  # Effect engine, wallpaper images and assets (open source)
+│   ├── effects.js                # Particle effect engine (MacEffectsFactory)
+│   ├── petals/ leaves/           # Petal / leaf sprites
+│   ├── mac-icons/                # Dock icons (MIT, see LICENSE files inside)
+│   └── *.jpg                     # Demo wallpapers
+└── .github/ISSUE_TEMPLATE/       # Feedback issue template
 ```
 
-## 🔗 相关链接
+## 🔗 Links
 
-- 官网（完整壁纸展示效果）：<https://macwall.skin>
-- 本仓库：<https://github.com/Gsaecy/MacWall-desktop>
-- 客服邮箱：[support@macwall.skin](mailto:support@macwall.skin)
+- Official site (full wallpaper showcase): <https://macwall.skin>
+- This repository: <https://github.com/Gsaecy/MacWall-desktop>
+- Support email: [support@macwall.skin](mailto:support@macwall.skin)
 
-## ⚖️ 许可
+## ⚖️ License
 
-本仓库效果代码（`index.html`、`site-assets/effects.js` 等）公开开源，供学习交流使用；演示壁纸图片与特效素材版权归麦壳壁纸（深圳市宏荣天秀贸易有限公司）所有，请勿商用。`site-assets/mac-icons/` 内 Dock 图标来自 [playground-macos](https://github.com/Renovamen/playground-macos) 与 [macos-web](https://github.com/PuruVJ/macos-web)（MIT License，详见目录内 LICENSE 文件）。
+The effect code in this repository (`index.html`, `site-assets/effects.js`, etc.) is open source for study and exchange. Demo wallpaper images and effect assets are copyrighted by MacWall (Shenzhen Honor World Trading Co., Ltd.) and are not for commercial use. Dock icons in `site-assets/mac-icons/` come from [playground-macos](https://github.com/Renovamen/playground-macos) and [macos-web](https://github.com/PuruVJ/macos-web) (MIT License, see the LICENSE files in that folder).
+
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>麦壳壁纸 MacWall · 桌面引擎技术交流站</title>
-<meta name="description" content="麦壳壁纸 MacWall 桌面引擎技术交流站：收录公开开源的壁纸引擎效果代码与在线演示，完整壁纸展示效果请访问官网 macwall.skin。">
+<title>MacWall · Desktop Engine Exchange</title>
+<meta name="description" content="MacWall Desktop Engine Exchange — open-source wallpaper engine effects, live demos and community feedback. Full wallpaper showcase on macwall.skin.">
 <link rel="icon" href="site-assets/icon.png" type="image/png">
 <style>
   :root {
@@ -49,7 +49,8 @@
   .intro h1 .grad { background: linear-gradient(90deg,#4f8cff,#6d5dfc,#e96ad3); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .intro p { color: var(--muted); margin-top: 12px; font-size: 14.5px; line-height: 1.8; }
   .intro .cta {
-    display: inline-block; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 18px;
     background: var(--ink); color: #fff; font-size: 13.5px; font-weight: 650;
     padding: 10px 22px; border-radius: 12px;
   }
@@ -80,8 +81,8 @@
     container-type: inline-size;
   }
   .win .wp { position: absolute; inset: 0; background-size: cover; background-position: center; }
-  .win .fx { position: absolute; inset: 0; }
-  .win .clock { position: absolute; inset: 0; }
+  .win .fx { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .win .clock { position: absolute; inset: 0; width: 100%; height: 100%; }
 
   .menubar {
     position: absolute; top: 0; left: 0; right: 0; z-index: 5;
@@ -144,7 +145,8 @@
   }
   .fallback a.btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
   .fallback a.btn:hover { text-decoration: none; opacity: .88; }
-  .fallback .note { color: var(--muted); font-size: 12.5px; line-height: 1.8; }
+  .fallback a.btn svg { vertical-align: -2px; }
+  .comments h2 svg, .catalog h2 svg { vertical-align: -4px; margin-right: 8px; }
 
   footer {
     text-align: center; color: #98a0b8; font-size: 12.5px;
@@ -161,30 +163,30 @@
 <body>
 
 <header class="top">
-  <div class="brand"><img src="site-assets/icon.png" alt="麦壳壁纸图标">麦壳壁纸 MacWall <span class="sub">桌面引擎技术交流</span></div>
+  <div class="brand"><img src="site-assets/icon.png" alt="MacWall">MacWall <span class="sub">Desktop Engine Exchange</span></div>
   <div class="spacer"></div>
   <nav>
-    <a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>
-    <a href="#catalog">开源收录</a>
-    <a href="#comments">公开留言</a>
-    <a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">GitHub 仓库</a>
+    <a href="https://macwall.skin" target="_blank" rel="noopener">macwall.skin</a>
+    <a href="#catalog">Engines</a>
+    <a href="#comments">Feedback</a>
+    <a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">GitHub</a>
   </nav>
 </header>
 
 <main>
   <section class="intro">
-    <h1>桌面引擎<span class="grad">技术交流站</span></h1>
-    <p>收录公开开源的壁纸引擎效果代码与在线演示，供开发者学习交流。<br>下方效果由本仓库开源引擎驱动；完整的壁纸展示效果，请访问官网。</p>
-    <a class="cta" href="https://macwall.skin" target="_blank" rel="noopener">🌐 访问官网查看完整壁纸效果 →</a>
+    <h1>Desktop Engine <span class="grad">Exchange</span></h1>
+    <p>Open-source wallpaper engine effects and live demos for developers.<br>These demos run on this repository's open engine — for the full wallpaper showcase, visit the official site.</p>
+    <a class="cta" href="https://macwall.skin" target="_blank" rel="noopener">View the full wallpaper showcase<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12.5 12.5 3.5M6 3.5h6.5V10"/></svg></a>
   </section>
 
-  <!-- 1. 循环特效 -->
+  <!-- 1. Wallpaper effects -->
   <section class="demo">
     <div class="win" id="wallWin">
       <div class="wp" id="wp1"></div>
       <canvas class="fx" id="fx1"></canvas>
       <div class="menubar">
-        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <span class="apple"></span><span>Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span>
         <div class="mb-right">
           <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
           <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
@@ -194,47 +196,47 @@
         </div>
       </div>
       <div class="dock">
-        <img src="site-assets/mac-icons/finder.png" alt="访达"><img src="site-assets/mac-icons/safari.png" alt="Safari">
-        <img src="site-assets/mac-icons/mail.png" alt="邮件"><img src="site-assets/mac-icons/terminal.png" alt="终端">
-        <img src="site-assets/mac-icons/vscode.png" alt="VSCode"><img src="site-assets/mac-icons/launchpad.png" alt="启动台">
+        <img src="site-assets/mac-icons/finder.png" alt="Finder"><img src="site-assets/mac-icons/safari.png" alt="Safari">
+        <img src="site-assets/mac-icons/mail.png" alt="Mail"><img src="site-assets/mac-icons/terminal.png" alt="Terminal">
+        <img src="site-assets/mac-icons/vscode.png" alt="VSCode"><img src="site-assets/mac-icons/launchpad.png" alt="Launchpad">
       </div>
-      <span class="tag" id="wallTag">雪花</span>
+      <span class="tag" id="wallTag">Snow</span>
     </div>
     <div class="panel">
-      <h2>壁纸循环特效</h2>
-      <p>雪花、花瓣、落叶、蒲公英、萤火虫、泡泡、火星、爱心——在静态壁纸上循环播放。点击切换实时预览：</p>
+      <h2>Wallpaper Effects</h2>
+      <p>Snow, petals, leaves, dandelions, fireflies, bubbles, embers and hearts — looping over any static wallpaper. Click to preview:</p>
       <div class="pills" id="wallPills">
-        <button data-fx="snow" class="on">雪花</button>
-        <button data-fx="petals">花瓣</button>
-        <button data-fx="leaves">落叶</button>
-        <button data-fx="dandelions">蒲公英</button>
-        <button data-fx="fireflies">萤火虫</button>
-        <button data-fx="bubbles">泡泡</button>
-        <button data-fx="embers">火星</button>
-        <button data-fx="hearts">爱心</button>
+        <button data-fx="snow" class="on">Snow</button>
+        <button data-fx="petals">Petals</button>
+        <button data-fx="leaves">Leaves</button>
+        <button data-fx="dandelions">Dandelions</button>
+        <button data-fx="fireflies">Fireflies</button>
+        <button data-fx="bubbles">Bubbles</button>
+        <button data-fx="embers">Embers</button>
+        <button data-fx="hearts">Hearts</button>
       </div>
-      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">Full wallpaper showcase on the official site →</a></p>
     </div>
   </section>
 
-  <!-- 2. 鼠标互动 -->
+  <!-- 2. Mouse effects -->
   <section class="demo rev">
     <div class="panel">
-      <h2>鼠标互动特效</h2>
-      <p>把鼠标移进右侧窗口：星尘光尾、七彩蝴蝶、火星四溅、萤火光迹，跟随你的真实轨迹实时渲染（火星特效点击触发）：</p>
+      <h2>Mouse Effects</h2>
+      <p>Move your cursor into the window: stardust trails, butterflies, spark bursts and firefly trails follow your real pointer (sparks trigger on click):</p>
       <div class="pills" id="mousePills">
-        <button data-fx="cometII" class="on">星尘光尾II</button>
-        <button data-fx="butterflies">七彩蝴蝶</button>
-        <button data-fx="spark">火星四溅（点击）</button>
-        <button data-fx="fireflyTrail">萤火光迹</button>
+        <button data-fx="cometII" class="on">Stardust Trail II</button>
+        <button data-fx="butterflies">Rainbow Butterflies</button>
+        <button data-fx="spark">Spark Burst (click)</button>
+        <button data-fx="fireflyTrail">Firefly Trails</button>
       </div>
-      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">Full wallpaper showcase on the official site →</a></p>
     </div>
     <div class="win" id="mouseWin">
       <div class="wp" id="wp2"></div>
       <canvas class="fx" id="fx2"></canvas>
       <div class="menubar">
-        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <span class="apple"></span><span>Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span>
         <div class="mb-right">
           <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
           <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
@@ -243,17 +245,17 @@
           <span style="font-variant-numeric:tabular-nums">10:24</span>
         </div>
       </div>
-      <span class="tag" id="mouseTag">星尘光尾II</span>
+      <span class="tag" id="mouseTag">Stardust Trail II</span>
     </div>
   </section>
 
-  <!-- 3. 音乐律动时钟 -->
+  <!-- 3. Music-reactive clock -->
   <section class="demo">
     <div class="win" id="clockWin">
       <div class="wp" id="wp3"></div>
       <canvas class="clock" id="clockCanvas"></canvas>
       <div class="menubar">
-        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <span class="apple"></span><span>Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span>
         <div class="mb-right">
           <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
           <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
@@ -262,75 +264,74 @@
           <span id="mbTime2" style="font-variant-numeric:tabular-nums">--:--</span>
         </div>
       </div>
-      <span class="tag" id="clockTag">玲珑幻彩</span>
+      <span class="tag" id="clockTag">Crystal Glow</span>
     </div>
     <div class="panel">
-      <h2>音乐律动时钟</h2>
-      <p>玲珑幻彩、时空波纹、霓虹灯牌——时钟跟随音乐能量律动。本页用模拟节奏驱动，MacWall 中由系统 / 本地音乐真实频谱驱动：</p>
+      <h2>Music-Reactive Clock</h2>
+      <p>Crystal glow, ripples and neon — the clock pulses to the beat. This demo plays a simulated music rhythm so you can watch it move:</p>
       <div class="pills" id="clockPills">
-        <button data-fx="crystal" class="on">玲珑幻彩</button>
-        <button data-fx="ripples">时空波纹</button>
-        <button data-fx="neon">霓虹灯牌</button>
+        <button data-fx="crystal" class="on">Crystal Glow</button>
+        <button data-fx="ripples">Ripples</button>
+        <button data-fx="neon">Neon Sign</button>
       </div>
-      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">Full wallpaper showcase on the official site →</a></p>
     </div>
   </section>
 
-  <!-- 3.5 开源壁纸引擎收录 -->
+  <!-- 3.5 Open-source wallpaper engines -->
   <section class="catalog" id="catalog">
-    <h2>📚 收录的开源壁纸引擎与效果代码</h2>
-    <p class="sub">面向桌面引擎开发者交流。以下为公开开源的壁纸引擎项目；本仓库的窗口效果引擎与演示代码同样完全开源，欢迎研究、参考与留言交流。</p>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3f4656" stroke-width="1.6" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><path d="M3.5 12h17M12 3.5v17"/></svg>Open-Source Wallpaper Engines</h2>
+    <p class="sub">A curated collection of open-source wallpaper engines for developers. This repository's own effect engine and demo code are fully open — study them, remix them, and share feedback below.</p>
     <div class="grid">
       <a class="item" href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">
-        <b>MacWall-desktop 效果引擎</b>
-        <span>粒子特效引擎 effects.js 与 macOS 窗口演示页（本仓库，公开开源）</span>
+        <b>MacWall-desktop Effect Engine</b>
+        <span>Particle effect engine (effects.js) and macOS window demos — this repository, open source</span>
       </a>
       <a class="item" href="https://github.com/rocksdanister/lively" target="_blank" rel="noopener">
         <b>Lively Wallpaper</b>
-        <span>Windows 开源动态壁纸引擎（GIF / 视频 / 网页）</span>
+        <span>Open-source animated desktop engine for Windows (GIF / video / web)</span>
       </a>
       <a class="item" href="https://github.com/t1m0thyj/WinDynamicDesktop" target="_blank" rel="noopener">
         <b>WinDynamicDesktop</b>
-        <span>Windows 动态壁纸（macOS Dynamic HEIF 壁纸方案）</span>
+        <span>Dynamic wallpapers on Windows (macOS Dynamic HEIF scheme)</span>
       </a>
       <a class="item" href="https://github.com/adi1090x/dynamic-wallpaper" target="_blank" rel="noopener">
         <b>dynamic-wallpaper</b>
-        <span>Linux 动态壁纸脚本合集（GNOME / KDE）</span>
+        <span>Dynamic wallpaper scripts for Linux (GNOME / KDE)</span>
       </a>
       <a class="item" href="https://github.com/Renovamen/playground-macos" target="_blank" rel="noopener">
         <b>playground-macos</b>
-        <span>网页版 macOS 桌面模拟（本仓库 Dock 图标来源，MIT）</span>
+        <span>macOS desktop in the browser (source of this repo's Dock icons, MIT)</span>
       </a>
       <a class="item" href="https://github.com/PuruVJ/macos-web" target="_blank" rel="noopener">
         <b>macos-web</b>
-        <span>网页版 macOS 桌面模拟（MIT）</span>
+        <span>macOS desktop in the browser (MIT)</span>
       </a>
     </div>
   </section>
 
-  <!-- 4. 公开留言 -->
+  <!-- 4. Feedback -->
   <section class="comments" id="comments">
-    <h2>💬 技术交流 · 公开留言</h2>
-    <p class="sub">留言数据保存在 GitHub <code>Discussions</code> 中，完全公开、可被所有人查看与回复。<br>启用方式见 <a href="https://github.com/Gsaecy/MacWall-desktop#readme" target="_blank" rel="noopener">README</a>；在 giscus 内嵌评论区启用前，可通过下方按钮直接留言。</p>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3f4656" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Feedback &amp; Discussion</h2>
+    <p class="sub">Comments are public on GitHub. Leave your feedback, share ideas, or join the discussion — everyone can read and reply.</p>
     <div id="giscusMount"></div>
     <div class="fallback" id="commentFallback">
       <div class="btns">
-        <a class="btn" href="https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml" target="_blank" rel="noopener">📝 留言 / 提反馈（Issue 表单）</a>
-        <a class="btn ghost" href="https://github.com/Gsaecy/MacWall-desktop/discussions" target="_blank" rel="noopener">💬 GitHub Discussions</a>
+        <a class="btn" href="https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Leave feedback</a>
+        <a class="btn ghost" href="https://github.com/Gsaecy/MacWall-desktop/discussions" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>GitHub Discussions</a>
       </div>
-      <p class="note">想要把留言区直接嵌入本页？仓库管理员在 GitHub 设置中开启 Discussions、安装 giscus App 后，<br>按 README 填入 <code>repoId</code> 与 <code>categoryId</code> 即可，无需修改服务器。</p>
     </div>
   </section>
 </main>
 
 <footer>
-  <div><a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>·<a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">本仓库（效果代码开源）</a>·<a href="mailto:support@macwall.skin">support@macwall.skin</a></div>
-  <div>© 2026 麦壳壁纸 MacWall · 深圳市宏荣天秀贸易有限公司 · 本页效果代码公开开源（MIT 第三方图标见 site-assets/mac-icons/LICENSE）</div>
+  <div><a href="https://macwall.skin" target="_blank" rel="noopener">macwall.skin</a>·<a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">Repository (open source)</a>·<a href="mailto:support@macwall.skin">support@macwall.skin</a></div>
+  <div>© 2026 MacWall · Shenzhen Honor World Trading Co., Ltd. · Demo code in this repository is open source (MIT icons in site-assets/mac-icons/LICENSE)</div>
 </footer>
 
 <script src="site-assets/effects.js"></script>
 <script>
-/* ================= 菜单栏时间 ================= */
+/* ================= Menubar clock ================= */
 function tickClockText() {
   const t = new Date();
   const p = n => String(n).padStart(2, '0');
@@ -341,16 +342,16 @@ function tickClockText() {
 tickClockText();
 setInterval(tickClockText, 10000);
 
-/* ================= 循环特效卡 ================= */
+/* ================= Wallpaper effects card ================= */
 const WALL_MAP = {
-  snow:       ['site-assets/hero-wallpaper.jpg',    '雪花'],
-  petals:     ['site-assets/w3-clouds.jpg',         '花瓣'],
-  leaves:     ['site-assets/w2-leaves.jpg',         '落叶'],
-  dandelions: ['site-assets/w5-grass.jpg',          '蒲公英'],
-  fireflies:  ['site-assets/w4-forest.jpg',         '萤火虫'],
-  bubbles:    ['site-assets/effect-wallpaper.jpg',  '泡泡'],
-  embers:     ['site-assets/effect-wallpaper.jpg',  '火星'],
-  hearts:     ['site-assets/w6-girl.jpg',           '爱心']
+  snow:       ['site-assets/hero-wallpaper.jpg',    'Snow'],
+  petals:     ['site-assets/w3-clouds.jpg',         'Petals'],
+  leaves:     ['site-assets/w2-leaves.jpg',         'Leaves'],
+  dandelions: ['site-assets/w5-grass.jpg',          'Dandelions'],
+  fireflies:  ['site-assets/w4-forest.jpg',         'Fireflies'],
+  bubbles:    ['site-assets/effect-wallpaper.jpg',  'Bubbles'],
+  embers:     ['site-assets/effect-wallpaper.jpg',  'Embers'],
+  hearts:     ['site-assets/w6-girl.jpg',           'Hearts']
 };
 const wallFx = MacEffectsFactory();
 wallFx.init(document.getElementById('fx1'), null);
@@ -382,14 +383,14 @@ function resetWallAuto() { clearInterval(wallAuto); wallAuto = setInterval(() =>
 }, 6000); }
 applyWall('snow');
 
-/* ================= 鼠标互动卡（真实鼠标） ================= */
+/* ================= Mouse effects card (real cursor) ================= */
 const mouseFx = MacEffectsFactory();
 mouseFx.init(document.getElementById('fx2'), null);
 mouseFx.setWallpaperEffect('none');
 mouseFx.setMouseEffect('cometII');
 document.getElementById('wp2').style.backgroundImage = "url('site-assets/mouse-wallpaper.jpg')";
 const mouseWin = document.getElementById('mouseWin');
-const MOUSE_NAMES = { cometII: '星尘光尾II', butterflies: '七彩蝴蝶', spark: '火星四溅', fireflyTrail: '萤火光迹' };
+const MOUSE_NAMES = { cometII: 'Stardust Trail II', butterflies: 'Rainbow Butterflies', spark: 'Spark Burst', fireflyTrail: 'Firefly Trails' };
 function applyMouse(name) {
   mouseFx.setMouseEffect(name);
   mouseFx.resetTrail();
@@ -408,13 +409,13 @@ mouseWin.addEventListener('pointermove', e => {
 });
 mouseWin.addEventListener('pointerdown', () => mouseFx.pointerDown());
 
-/* ================= 音乐时钟卡（模拟律动） ================= */
+/* ================= Music clock card (simulated beat) ================= */
 const clockFx = MacEffectsFactory();
 clockFx.init(document.getElementById('clockCanvas'), document.getElementById('clockCanvas'));
 clockFx.setWallpaperEffect('none');
 clockFx.setClockStyle('crystal');
 document.getElementById('wp3').style.backgroundImage = "url('site-assets/w4-forest.jpg')";
-const CLOCK_NAMES = { crystal: '玲珑幻彩', ripples: '时空波纹', neon: '霓虹灯牌' };
+const CLOCK_NAMES = { crystal: 'Crystal Glow', ripples: 'Ripples', neon: 'Neon Sign' };
 function applyClock(name) {
   clockFx.setClockStyle(name);
   document.getElementById('clockTag').textContent = CLOCK_NAMES[name];
@@ -427,8 +428,12 @@ document.getElementById('clockPills').addEventListener('click', e => {
 });
 function beatLoop(ts) {
   const t = ts / 1000;
-  const lvl = 0.30 + 0.22 * Math.abs(Math.sin(t * 1.15));
-  const bands = [0.32, 0.18 + 0.12 * Math.abs(Math.sin(t * 0.8)), 0.09];
+  // Simulated music: three frequency bands drive particles and the clock
+  const b0 = 0.34 + 0.26 * Math.abs(Math.sin(t * 1.9));
+  const b1 = 0.20 + 0.20 * Math.abs(Math.sin(t * 1.3 + 1.2));
+  const b2 = 0.10 + 0.14 * Math.abs(Math.sin(t * 2.7 + 2.4));
+  const bands = [b0, b1, b2];
+  const lvl = b0 * 0.5 + b1 * 0.3 + b2 * 0.2;
   wallFx.audioData(lvl, bands);
   mouseFx.audioData(lvl, bands);
   clockFx.audioData(lvl, bands);
@@ -436,9 +441,9 @@ function beatLoop(ts) {
 }
 requestAnimationFrame(beatLoop);
 
-/* ================= 公开留言：giscus（开启后自动替换下方按钮） ================= */
+/* ================= Feedback: giscus (replaces the buttons once configured) ================= */
 const GISCUS_CONFIG = {
-  ready: false,                    // 按 README 配置好 Discussions 与 giscus 后改为 true
+  ready: false,                    // set to true after configuring Discussions + giscus per README
   repo: 'Gsaecy/MacWall-desktop',
   repoId: '',                      // 例：R_kgDOxxxxxx
   category: 'Announcements',

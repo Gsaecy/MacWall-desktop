@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
-  - name: 💬 公开留言与讨论（Discussions）
+  - name: Feedback & Discussion (Discussions)
     url: https://github.com/Gsaecy/MacWall-desktop/discussions
-    about: 开启 Discussions 后，留言与讨论会集中在这里，也会显示在官网演示页底部
-  - name: 🌐 麦壳壁纸官网
+    about: Feedback and discussions live here and appear at the bottom of the demo page
+  - name: MacWall Official Website
     url: https://macwall.skin
-    about: 官网：动态壁纸、循环特效、音乐律动时钟介绍
-  - name: ✉️ 客服邮箱
+    about: Dynamic wallpapers, looping effects and the music-reactive clock
+  - name: Support Email
     url: mailto:support@macwall.skin
-    about: 技术支持与版权问题请发邮件
+    about: Technical support and copyright inquiries

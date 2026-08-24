@@ -260,7 +260,7 @@ window.MacEffectsFactory = function () {
         p.x += p.vx + Math.sin(t / 1000 * 1.2 + p.sw) * 0.0003;
         if (p.y > 1.05) { p.y = -0.05; p.x = Math.random(); }
         if (p.x < -0.02) p.x += 1.04; if (p.x > 1.02) p.x -= 1.04;
-        var x = p.x * W, y = p.y * H, r = p.r * dpr;
+        var x = p.x * W, y = p.y * H, r = p.r * dpr * dispScale;
         ctx.globalAlpha = p.a;
         ctx.drawImage(snowDots[p.sh], x - r * 2, y - r * 2, r * 4, r * 4);
         ctx.globalAlpha = 1;
@@ -295,9 +295,9 @@ window.MacEffectsFactory = function () {
       if (glow > 0.01) {
         var x = f.x * W, y = f.y * H;
         ctx.globalCompositeOperation = 'lighter';
-        glowCircle(ctx, x, y, f.r * 3.2 * dpr * glow + 1, f.c.join(','), 0.75 * glow);
+        glowCircle(ctx, x, y, f.r * 3.2 * dpr * dispScale * glow + 1, f.c.join(','), 0.75 * glow);
         ctx.fillStyle = 'rgba(255,255,255,' + (0.85 * glow) + ')';
-        ctx.beginPath(); ctx.arc(x, y, f.r * dpr * glow * 0.55, 0, TAU); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, f.r * dpr * dispScale * glow * 0.55, 0, TAU); ctx.fill();
         ctx.globalCompositeOperation = 'source-over';
       }
     }
@@ -317,7 +317,7 @@ window.MacEffectsFactory = function () {
       var col = 'rgb(' + Math.round(255 * ti) + ',' + Math.round(158 * ti) + ',' + Math.round(184 * ti) + ')';
       ctx.save();
       ctx.translate(x, y);
-      ctx.scale(rr * dpr, rr * dpr);
+      ctx.scale(rr * dpr * dispScale, rr * dpr * dispScale);
       if (rr > 1.25) { ctx.globalAlpha = 0.10 * intensity; ctx.fillStyle = col; ctx.fill(heartPaths[0]); }
       if (rr > 1.5) { ctx.globalAlpha = 0.16 * intensity; ctx.fillStyle = col; ctx.fill(heartPaths[1]); }
       ctx.globalAlpha = intensity; ctx.fillStyle = col; ctx.fill(heartPaths[2]);
@@ -347,14 +347,14 @@ window.MacEffectsFactory = function () {
       // 拖尾
       ctx.strokeStyle = emberColor(lifeP * 0.55);
       ctx.globalAlpha = alpha * 0.5;
-      ctx.lineWidth = e.r * dpr * 0.5;
+      ctx.lineWidth = e.r * dpr * dispScale * 0.5;
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - Math.sin(t / 700 + e.sw) * 10, py + 8); ctx.stroke();
       ctx.globalAlpha = 1;
-      glowCircle(ctx, px, py, e.r * 4 * dpr, emberColor(lifeP).match(/\d+/g).join(','), alpha * 0.5);
+      glowCircle(ctx, px, py, e.r * 4 * dpr * dispScale, emberColor(lifeP).match(/\d+/g).join(','), alpha * 0.5);
       ctx.fillStyle = emberColor(Math.max(0, lifeP - 0.15));
       ctx.globalAlpha = alpha;
-      ctx.beginPath(); ctx.arc(px, py, e.r * dpr, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, e.r * dpr * dispScale, 0, TAU); ctx.fill();
       ctx.globalAlpha = 1;
       if (e.p >= 1) { e.p = 0; e.x = Math.random(); e.rise = 0.07 + Math.random() * 0.14; }
     }
@@ -366,7 +366,7 @@ window.MacEffectsFactory = function () {
       b.y -= b.vy;
       b.x += Math.sin(t / 1000 * 1.4 + b.sw) * 0.0004;
       if (b.y < -0.08) { b.y = 1.05; b.x = Math.random(); }
-      var x = b.x * W, y = b.y * H, r = b.r * dpr;
+      var x = b.x * W, y = b.y * H, r = b.r * dpr * dispScale;
       ctx.save();
       ctx.globalAlpha = 0.85;
       var g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
@@ -410,7 +410,7 @@ window.MacEffectsFactory = function () {
       p.x += p.dx + Math.sin(t / 1000 * 1.5 + p.sw) * 0.0008;
       p.tp += p.tumble;
       if (p.y > 1.08) { p.y = -0.08; p.x = Math.random(); }
-      var x = p.x * W, y = p.y * H, r = p.r * dpr;
+      var x = p.x * W, y = p.y * H, r = p.r * dpr * dispScale;
       var face = Math.abs(Math.sin(p.tp));
       var img = face < 0.5 ? SharedPetalAssets.sides[p.s] : SharedPetalAssets.fronts[p.f];
       ctx.save();
@@ -437,7 +437,7 @@ window.MacEffectsFactory = function () {
       l.x += Math.sin(t / 1000 * 1.6 + l.sw) * 0.0007;
       l.rot += l.spin * 0.016;
       if (l.y > 1.06) { l.y = -0.06; l.x = Math.random(); }
-      var x = l.x * W, y = l.y * H, r = l.r * dpr;
+      var x = l.x * W, y = l.y * H, r = l.r * dpr * dispScale;
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(l.rot);
@@ -462,7 +462,7 @@ window.MacEffectsFactory = function () {
       d.y += d.vy;
       d.x += Math.sin(t / 1000 * 2.2 + d.sw) * 0.0012;
       if (d.y > 1.05) { d.y = -0.05; d.x = Math.random(); }
-      var x = d.x * W, y = d.y * H, r = d.r * dpr;
+      var x = d.x * W, y = d.y * H, r = d.r * dpr * dispScale;
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(d.rot + Math.sin(t / 1400 + d.sw) * 0.3);
@@ -1198,7 +1198,7 @@ window.MacEffectsFactory = function () {
     if (!canvas) return;
     dpr = 2; // 强制 2× 超采样，粒子更锐利
     W = canvas.clientWidth; H = canvas.clientHeight;
-    dispScale = Math.max(0.3, Math.min(1.2, Math.min(W / 1920, H / 1080)));
+    dispScale = Math.max(0.45, Math.min(1.2, Math.min(W / 1920, H / 1080)));
     canvas.width = W * dpr; canvas.height = H * dpr;
     if (clockCanvas) {
       clockCanvas.width = clockCanvas.clientWidth * dpr;
