@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>麦壳壁纸 MacWall · 窗口效果演示与公开留言</title>
-<meta name="description" content="MacWall 官网子项目：macOS 桌面窗口效果演示（动态壁纸 / 循环特效 / 鼠标互动 / 音乐律动时钟）与公开留言反馈。">
+<title>麦壳壁纸 MacWall · 桌面引擎技术交流站</title>
+<meta name="description" content="麦壳壁纸 MacWall 桌面引擎技术交流站：收录公开开源的壁纸引擎效果代码与在线演示，完整壁纸展示效果请访问官网 macwall.skin。">
 <link rel="icon" href="site-assets/icon.png" type="image/png">
 <style>
   :root {
@@ -48,6 +48,27 @@
   .intro h1 { font-size: clamp(26px, 4vw, 38px); letter-spacing: -.01em; }
   .intro h1 .grad { background: linear-gradient(90deg,#4f8cff,#6d5dfc,#e96ad3); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .intro p { color: var(--muted); margin-top: 12px; font-size: 14.5px; line-height: 1.8; }
+  .intro .cta {
+    display: inline-block; margin-top: 18px;
+    background: var(--ink); color: #fff; font-size: 13.5px; font-weight: 650;
+    padding: 10px 22px; border-radius: 12px;
+  }
+  .intro .cta:hover { text-decoration: none; opacity: .88; }
+  .panel-link { margin-top: 14px; font-size: 13px; }
+
+  .catalog { margin-bottom: 46px; }
+  .catalog h2 { font-size: 22px; margin-bottom: 8px; }
+  .catalog .sub { color: var(--muted); font-size: 13.5px; line-height: 1.8; margin-bottom: 18px; }
+  .catalog .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+  .catalog .item {
+    display: flex; flex-direction: column; gap: 4px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 16px 18px; box-shadow: 0 8px 24px rgba(23,36,92,.05);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .catalog .item:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(23,36,92,.1); text-decoration: none; }
+  .catalog .item b { font-size: 14.5px; color: var(--ink); }
+  .catalog .item span { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 
   .demo { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: center; margin-bottom: 46px; }
   .demo.rev { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
@@ -140,19 +161,21 @@
 <body>
 
 <header class="top">
-  <div class="brand"><img src="site-assets/icon.png" alt="麦壳壁纸图标">麦壳壁纸 MacWall <span class="sub">官网子项目</span></div>
+  <div class="brand"><img src="site-assets/icon.png" alt="麦壳壁纸图标">麦壳壁纸 MacWall <span class="sub">桌面引擎技术交流</span></div>
   <div class="spacer"></div>
   <nav>
     <a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>
-    <a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">GitHub 仓库</a>
+    <a href="#catalog">开源收录</a>
     <a href="#comments">公开留言</a>
+    <a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">GitHub 仓库</a>
   </nav>
 </header>
 
 <main>
   <section class="intro">
-    <h1>把桌面，变成<span class="grad">会呼吸的风景</span></h1>
-    <p>以下窗口效果与官网展示完全一致，由 MacWall 真实渲染引擎复刻。<br>欢迎试用、提意见，或在下方留下你的公开留言。</p>
+    <h1>桌面引擎<span class="grad">技术交流站</span></h1>
+    <p>收录公开开源的壁纸引擎效果代码与在线演示，供开发者学习交流。<br>下方效果由本仓库开源引擎驱动；完整的壁纸展示效果，请访问官网。</p>
+    <a class="cta" href="https://macwall.skin" target="_blank" rel="noopener">🌐 访问官网查看完整壁纸效果 →</a>
   </section>
 
   <!-- 1. 循环特效 -->
@@ -190,6 +213,7 @@
         <button data-fx="embers">火星</button>
         <button data-fx="hearts">爱心</button>
       </div>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
     </div>
   </section>
 
@@ -204,6 +228,7 @@
         <button data-fx="spark">火星四溅（点击）</button>
         <button data-fx="fireflyTrail">萤火光迹</button>
       </div>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
     </div>
     <div class="win" id="mouseWin">
       <div class="wp" id="wp2"></div>
@@ -247,12 +272,45 @@
         <button data-fx="ripples">时空波纹</button>
         <button data-fx="neon">霓虹灯牌</button>
       </div>
+      <p class="panel-link"><a href="https://macwall.skin" target="_blank" rel="noopener">在官网查看完整壁纸效果 →</a></p>
+    </div>
+  </section>
+
+  <!-- 3.5 开源壁纸引擎收录 -->
+  <section class="catalog" id="catalog">
+    <h2>📚 收录的开源壁纸引擎与效果代码</h2>
+    <p class="sub">面向桌面引擎开发者交流。以下为公开开源的壁纸引擎项目；本仓库的窗口效果引擎与演示代码同样完全开源，欢迎研究、参考与留言交流。</p>
+    <div class="grid">
+      <a class="item" href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">
+        <b>MacWall-desktop 效果引擎</b>
+        <span>粒子特效引擎 effects.js 与 macOS 窗口演示页（本仓库，公开开源）</span>
+      </a>
+      <a class="item" href="https://github.com/rocksdanister/lively" target="_blank" rel="noopener">
+        <b>Lively Wallpaper</b>
+        <span>Windows 开源动态壁纸引擎（GIF / 视频 / 网页）</span>
+      </a>
+      <a class="item" href="https://github.com/t1m0thyj/WinDynamicDesktop" target="_blank" rel="noopener">
+        <b>WinDynamicDesktop</b>
+        <span>Windows 动态壁纸（macOS Dynamic HEIF 壁纸方案）</span>
+      </a>
+      <a class="item" href="https://github.com/adi1090x/dynamic-wallpaper" target="_blank" rel="noopener">
+        <b>dynamic-wallpaper</b>
+        <span>Linux 动态壁纸脚本合集（GNOME / KDE）</span>
+      </a>
+      <a class="item" href="https://github.com/Renovamen/playground-macos" target="_blank" rel="noopener">
+        <b>playground-macos</b>
+        <span>网页版 macOS 桌面模拟（本仓库 Dock 图标来源，MIT）</span>
+      </a>
+      <a class="item" href="https://github.com/PuruVJ/macos-web" target="_blank" rel="noopener">
+        <b>macos-web</b>
+        <span>网页版 macOS 桌面模拟（MIT）</span>
+      </a>
     </div>
   </section>
 
   <!-- 4. 公开留言 -->
   <section class="comments" id="comments">
-    <h2>💬 公开留言</h2>
+    <h2>💬 技术交流 · 公开留言</h2>
     <p class="sub">留言数据保存在 GitHub <code>Discussions</code> 中，完全公开、可被所有人查看与回复。<br>启用方式见 <a href="https://github.com/Gsaecy/MacWall-desktop#readme" target="_blank" rel="noopener">README</a>；在 giscus 内嵌评论区启用前，可通过下方按钮直接留言。</p>
     <div id="giscusMount"></div>
     <div class="fallback" id="commentFallback">
@@ -266,8 +324,8 @@
 </main>
 
 <footer>
-  <div><a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>·<a href="https://github.com/Gsaecy/MacWall" target="_blank" rel="noopener">主仓库</a>·<a href="mailto:support@macwall.skin">support@macwall.skin</a></div>
-  <div>© 2026 麦壳壁纸 MacWall · 深圳市宏荣天秀贸易有限公司 · 效果引擎与素材同官网一致（MIT 第三方图标见 site-assets/mac-icons/LICENSE）</div>
+  <div><a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>·<a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">本仓库（效果代码开源）</a>·<a href="mailto:support@macwall.skin">support@macwall.skin</a></div>
+  <div>© 2026 麦壳壁纸 MacWall · 深圳市宏荣天秀贸易有限公司 · 本页效果代码公开开源（MIT 第三方图标见 site-assets/mac-icons/LICENSE）</div>
 </footer>
 
 <script src="site-assets/effects.js"></script>
