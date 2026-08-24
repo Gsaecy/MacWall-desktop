@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麦壳壁纸 MacWall · 窗口效果演示与公开留言</title>
+<meta name="description" content="MacWall 官网子项目：macOS 桌面窗口效果演示（动态壁纸 / 循环特效 / 鼠标互动 / 音乐律动时钟）与公开留言反馈。">
+<link rel="icon" href="site-assets/icon.png" type="image/png">
+<style>
+  :root {
+    --ink: #0d1424; --muted: #6b7288; --accent2: #3f4656;
+    --line: rgba(13,20,36,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background:
+      linear-gradient(rgba(17,19,24,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17,19,24,.035) 1px, transparent 1px),
+      linear-gradient(180deg, #f8f9fb 0%, #ffffff 40%, #f3f5f9 100%);
+    background-size: 64px 64px, 64px 64px, 100% 100%;
+    min-height: 100vh;
+  }
+  a { color: #4a5bd6; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .top {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; gap: 18px;
+    padding: 0 clamp(16px, 3vw, 34px); height: 58px;
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-bottom: 1px solid var(--line);
+  }
+  .top .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 15px; white-space: nowrap; }
+  .top .brand img { width: 26px; height: 26px; border-radius: 7px; }
+  .top .brand .sub { font-weight: 600; font-size: 12px; color: var(--muted); background: #f0f1f6; padding: 3px 9px; border-radius: 999px; }
+  .top .spacer { flex: 1; }
+  .top nav { display: flex; gap: 16px; font-size: 13.5px; }
+  .top nav a { color: var(--muted); }
+  .top nav a:hover { color: var(--ink); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 52px clamp(16px, 4vw, 40px) 80px; }
+
+  .intro { text-align: center; margin-bottom: 44px; }
+  .intro h1 { font-size: clamp(26px, 4vw, 38px); letter-spacing: -.01em; }
+  .intro h1 .grad { background: linear-gradient(90deg,#4f8cff,#6d5dfc,#e96ad3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .intro p { color: var(--muted); margin-top: 12px; font-size: 14.5px; line-height: 1.8; }
+
+  .demo { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: center; margin-bottom: 46px; }
+  .demo.rev { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+  .win {
+    position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 10;
+    background: #1b2030;
+    border: 1px solid var(--line);
+    box-shadow: 0 26px 60px rgba(23,36,92,.16);
+    container-type: inline-size;
+  }
+  .win .wp { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .win .fx { position: absolute; inset: 0; }
+  .win .clock { position: absolute; inset: 0; }
+
+  .menubar {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; align-items: center; gap: clamp(8px, 1.4cqw, 16px);
+    padding: 0 clamp(10px, 1.8cqw, 18px); height: 9cqw;
+    background: rgba(22,24,32,.36);
+    backdrop-filter: blur(22px) saturate(1.5);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    color: #fff; font-size: 3.2cqw; font-weight: 600; user-select: none;
+  }
+  .menubar .apple { font-size: 3.8cqw; }
+  .menubar .mb-right { margin-left: auto; display: flex; align-items: center; gap: 2.6cqw; }
+  .menubar .mb-right svg { width: 6.4cqw; height: 3.4cqw; display: block; }
+  .menubar .mb-right .search { width: 3.4cqw; height: 3.4cqw; }
+  .menubar .mb-right .ctl { width: 4cqw; height: 3.4cqw; }
+
+  .dock {
+    position: absolute; left: 50%; bottom: 2.2cqw; transform: translateX(-50%); z-index: 5;
+    display: flex; gap: 1.6cqw; align-items: flex-end;
+    padding: 1.6cqw 1.8cqw; border-radius: 4.4cqw;
+    background: rgba(245,246,250,.38);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(255,255,255,.35);
+  }
+  .dock img { width: 9.4cqw; height: 9.4cqw; border-radius: 2.2cqw; display: block; box-shadow: 0 2px 8px rgba(13,20,36,.18); }
+  .tag {
+    position: absolute; top: 13cqw; right: 3cqw; z-index: 6;
+    background: rgba(13,20,36,.55); color: #fff; font-size: 3cqw; font-weight: 700;
+    padding: 1.2cqw 2.6cqw; border-radius: 999px; letter-spacing: .04em;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+
+  .panel h2 { font-size: 21px; margin-bottom: 10px; }
+  .panel p { color: var(--muted); font-size: 13.5px; line-height: 1.8; margin-bottom: 16px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pills button {
+    border: 1px solid var(--line); background: #fff; color: var(--accent2);
+    font-family: inherit; font-size: 12.5px; font-weight: 650;
+    padding: 7px 14px; border-radius: 999px; cursor: pointer;
+    transition: all .15s ease;
+  }
+  .pills button:hover { border-color: #c9cfe2; color: var(--ink); }
+  .pills button.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .comments {
+    margin-top: 70px; padding: 34px clamp(18px, 4vw, 38px) 30px;
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: 0 18px 46px rgba(23,36,92,.08);
+  }
+  .comments h2 { font-size: 22px; }
+  .comments .sub { color: var(--muted); font-size: 13.5px; margin: 8px 0 20px; line-height: 1.8; }
+  .comments .sub code { background: #f0f1f6; border-radius: 6px; padding: 1px 6px; font-size: 12px; }
+  .fallback { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .fallback .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .fallback a.btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #fff; font-size: 13.5px; font-weight: 650;
+    padding: 10px 18px; border-radius: 12px;
+  }
+  .fallback a.btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .fallback a.btn:hover { text-decoration: none; opacity: .88; }
+  .fallback .note { color: var(--muted); font-size: 12.5px; line-height: 1.8; }
+
+  footer {
+    text-align: center; color: #98a0b8; font-size: 12.5px;
+    padding: 30px 20px 44px; line-height: 2;
+  }
+  footer a { color: #6b7288; margin: 0 8px; }
+
+  @media (max-width: 860px) {
+    .demo, .demo.rev { grid-template-columns: 1fr; }
+    .top nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><img src="site-assets/icon.png" alt="麦壳壁纸图标">麦壳壁纸 MacWall <span class="sub">官网子项目</span></div>
+  <div class="spacer"></div>
+  <nav>
+    <a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>
+    <a href="https://github.com/Gsaecy/MacWall-desktop" target="_blank" rel="noopener">GitHub 仓库</a>
+    <a href="#comments">公开留言</a>
+  </nav>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>把桌面，变成<span class="grad">会呼吸的风景</span></h1>
+    <p>以下窗口效果与官网展示完全一致，由 MacWall 真实渲染引擎复刻。<br>欢迎试用、提意见，或在下方留下你的公开留言。</p>
+  </section>
+
+  <!-- 1. 循环特效 -->
+  <section class="demo">
+    <div class="win" id="wallWin">
+      <div class="wp" id="wp1"></div>
+      <canvas class="fx" id="fx1"></canvas>
+      <div class="menubar">
+        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <div class="mb-right">
+          <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
+          <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
+          <svg class="search" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".92"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+          <svg class="ctl" viewBox="0 0 18 13" fill="none" opacity=".92"><rect x=".8" y="5.6" width="9" height="6.6" rx="3.2" fill="#fff"/><rect x="8.2" y=".8" width="9" height="6.6" rx="3.2" fill="#fff" opacity=".55"/></svg>
+          <span id="mbTime" style="font-variant-numeric:tabular-nums">--:--</span>
+        </div>
+      </div>
+      <div class="dock">
+        <img src="site-assets/mac-icons/finder.png" alt="访达"><img src="site-assets/mac-icons/safari.png" alt="Safari">
+        <img src="site-assets/mac-icons/mail.png" alt="邮件"><img src="site-assets/mac-icons/terminal.png" alt="终端">
+        <img src="site-assets/mac-icons/vscode.png" alt="VSCode"><img src="site-assets/mac-icons/launchpad.png" alt="启动台">
+      </div>
+      <span class="tag" id="wallTag">雪花</span>
+    </div>
+    <div class="panel">
+      <h2>壁纸循环特效</h2>
+      <p>雪花、花瓣、落叶、蒲公英、萤火虫、泡泡、火星、爱心——在静态壁纸上循环播放。点击切换实时预览：</p>
+      <div class="pills" id="wallPills">
+        <button data-fx="snow" class="on">雪花</button>
+        <button data-fx="petals">花瓣</button>
+        <button data-fx="leaves">落叶</button>
+        <button data-fx="dandelions">蒲公英</button>
+        <button data-fx="fireflies">萤火虫</button>
+        <button data-fx="bubbles">泡泡</button>
+        <button data-fx="embers">火星</button>
+        <button data-fx="hearts">爱心</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 鼠标互动 -->
+  <section class="demo rev">
+    <div class="panel">
+      <h2>鼠标互动特效</h2>
+      <p>把鼠标移进右侧窗口：星尘光尾、七彩蝴蝶、火星四溅、萤火光迹，跟随你的真实轨迹实时渲染（火星特效点击触发）：</p>
+      <div class="pills" id="mousePills">
+        <button data-fx="cometII" class="on">星尘光尾II</button>
+        <button data-fx="butterflies">七彩蝴蝶</button>
+        <button data-fx="spark">火星四溅（点击）</button>
+        <button data-fx="fireflyTrail">萤火光迹</button>
+      </div>
+    </div>
+    <div class="win" id="mouseWin">
+      <div class="wp" id="wp2"></div>
+      <canvas class="fx" id="fx2"></canvas>
+      <div class="menubar">
+        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <div class="mb-right">
+          <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
+          <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
+          <svg class="search" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".92"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+          <svg class="ctl" viewBox="0 0 18 13" fill="none" opacity=".92"><rect x=".8" y="5.6" width="9" height="6.6" rx="3.2" fill="#fff"/><rect x="8.2" y=".8" width="9" height="6.6" rx="3.2" fill="#fff" opacity=".55"/></svg>
+          <span style="font-variant-numeric:tabular-nums">10:24</span>
+        </div>
+      </div>
+      <span class="tag" id="mouseTag">星尘光尾II</span>
+    </div>
+  </section>
+
+  <!-- 3. 音乐律动时钟 -->
+  <section class="demo">
+    <div class="win" id="clockWin">
+      <div class="wp" id="wp3"></div>
+      <canvas class="clock" id="clockCanvas"></canvas>
+      <div class="menubar">
+        <span class="apple"></span><span>访达</span><span>文件</span><span>编辑</span><span>显示</span><span>前往</span>
+        <div class="mb-right">
+          <svg viewBox="0 0 26 13" fill="none" stroke="#fff" stroke-width="1.2" opacity=".92"><rect x=".7" y=".7" width="21" height="11.6" rx="3"/><rect x="23.4" y="4.2" width="2.2" height="4.6" rx="1" fill="#fff" stroke="none"/><rect x="2.6" y="2.6" width="12.4" height="7.8" rx="1.6" fill="#fff" opacity=".85"/></svg>
+          <svg viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".92"><path d="M1.2 4.2a10 10 0 0 1 13.6 0"/><path d="M3.7 6.8a6.4 6.4 0 0 1 8.6 0"/><path d="M6.2 9.3a3 3 0 0 1 3.6 0"/><circle cx="8" cy="10.8" r="1" fill="#fff" stroke="none"/></svg>
+          <svg class="search" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".92"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+          <svg class="ctl" viewBox="0 0 18 13" fill="none" opacity=".92"><rect x=".8" y="5.6" width="9" height="6.6" rx="3.2" fill="#fff"/><rect x="8.2" y=".8" width="9" height="6.6" rx="3.2" fill="#fff" opacity=".55"/></svg>
+          <span id="mbTime2" style="font-variant-numeric:tabular-nums">--:--</span>
+        </div>
+      </div>
+      <span class="tag" id="clockTag">玲珑幻彩</span>
+    </div>
+    <div class="panel">
+      <h2>音乐律动时钟</h2>
+      <p>玲珑幻彩、时空波纹、霓虹灯牌——时钟跟随音乐能量律动。本页用模拟节奏驱动，MacWall 中由系统 / 本地音乐真实频谱驱动：</p>
+      <div class="pills" id="clockPills">
+        <button data-fx="crystal" class="on">玲珑幻彩</button>
+        <button data-fx="ripples">时空波纹</button>
+        <button data-fx="neon">霓虹灯牌</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 公开留言 -->
+  <section class="comments" id="comments">
+    <h2>💬 公开留言</h2>
+    <p class="sub">留言数据保存在 GitHub <code>Discussions</code> 中，完全公开、可被所有人查看与回复。<br>启用方式见 <a href="https://github.com/Gsaecy/MacWall-desktop#readme" target="_blank" rel="noopener">README</a>；在 giscus 内嵌评论区启用前，可通过下方按钮直接留言。</p>
+    <div id="giscusMount"></div>
+    <div class="fallback" id="commentFallback">
+      <div class="btns">
+        <a class="btn" href="https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml" target="_blank" rel="noopener">📝 留言 / 提反馈（Issue 表单）</a>
+        <a class="btn ghost" href="https://github.com/Gsaecy/MacWall-desktop/discussions" target="_blank" rel="noopener">💬 GitHub Discussions</a>
+      </div>
+      <p class="note">想要把留言区直接嵌入本页？仓库管理员在 GitHub 设置中开启 Discussions、安装 giscus App 后，<br>按 README 填入 <code>repoId</code> 与 <code>categoryId</code> 即可，无需修改服务器。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div><a href="https://macwall.skin" target="_blank" rel="noopener">官网 macwall.skin</a>·<a href="https://github.com/Gsaecy/MacWall" target="_blank" rel="noopener">主仓库</a>·<a href="mailto:support@macwall.skin">support@macwall.skin</a></div>
+  <div>© 2026 麦壳壁纸 MacWall · 深圳市宏荣天秀贸易有限公司 · 效果引擎与素材同官网一致（MIT 第三方图标见 site-assets/mac-icons/LICENSE）</div>
+</footer>
+
+<script src="site-assets/effects.js"></script>
+<script>
+/* ================= 菜单栏时间 ================= */
+function tickClockText() {
+  const t = new Date();
+  const p = n => String(n).padStart(2, '0');
+  const txt = p(t.getHours()) + ':' + p(t.getMinutes());
+  document.getElementById('mbTime').textContent = txt;
+  document.getElementById('mbTime2').textContent = txt;
+}
+tickClockText();
+setInterval(tickClockText, 10000);
+
+/* ================= 循环特效卡 ================= */
+const WALL_MAP = {
+  snow:       ['site-assets/hero-wallpaper.jpg',    '雪花'],
+  petals:     ['site-assets/w3-clouds.jpg',         '花瓣'],
+  leaves:     ['site-assets/w2-leaves.jpg',         '落叶'],
+  dandelions: ['site-assets/w5-grass.jpg',          '蒲公英'],
+  fireflies:  ['site-assets/w4-forest.jpg',         '萤火虫'],
+  bubbles:    ['site-assets/effect-wallpaper.jpg',  '泡泡'],
+  embers:     ['site-assets/effect-wallpaper.jpg',  '火星'],
+  hearts:     ['site-assets/w6-girl.jpg',           '爱心']
+};
+const wallFx = MacEffectsFactory();
+wallFx.init(document.getElementById('fx1'), null);
+const wp1 = document.getElementById('wp1');
+let wallCurrent = 'snow';
+let wallIdx = Object.keys(WALL_MAP).indexOf('snow');
+function applyWall(name) {
+  wallCurrent = name;
+  const [img, label] = WALL_MAP[name];
+  wp1.style.backgroundImage = `url('${img}')`;
+  wallFx.setWallpaperEffect(name);
+  document.getElementById('wallTag').textContent = label;
+  document.querySelectorAll('#wallPills button').forEach(b =>
+    b.classList.toggle('on', b.dataset.fx === name));
+}
+document.getElementById('wallPills').addEventListener('click', e => {
+  const fx = e.target.dataset && e.target.dataset.fx;
+  if (fx) { applyWall(fx); resetWallAuto(); }
+});
+let wallAuto = setInterval(() => {
+  const keys = Object.keys(WALL_MAP);
+  wallIdx = (wallIdx + 1) % keys.length;
+  applyWall(keys[wallIdx]);
+}, 6000);
+function resetWallAuto() { clearInterval(wallAuto); wallAuto = setInterval(() => {
+  const keys = Object.keys(WALL_MAP);
+  wallIdx = (keys.indexOf(wallCurrent) + 1) % keys.length;
+  applyWall(keys[wallIdx]);
+}, 6000); }
+applyWall('snow');
+
+/* ================= 鼠标互动卡（真实鼠标） ================= */
+const mouseFx = MacEffectsFactory();
+mouseFx.init(document.getElementById('fx2'), null);
+mouseFx.setWallpaperEffect('none');
+mouseFx.setMouseEffect('cometII');
+document.getElementById('wp2').style.backgroundImage = "url('site-assets/mouse-wallpaper.jpg')";
+const mouseWin = document.getElementById('mouseWin');
+const MOUSE_NAMES = { cometII: '星尘光尾II', butterflies: '七彩蝴蝶', spark: '火星四溅', fireflyTrail: '萤火光迹' };
+function applyMouse(name) {
+  mouseFx.setMouseEffect(name);
+  mouseFx.resetTrail();
+  document.getElementById('mouseTag').textContent = MOUSE_NAMES[name];
+  document.querySelectorAll('#mousePills button').forEach(b =>
+    b.classList.toggle('on', b.dataset.fx === name));
+}
+document.getElementById('mousePills').addEventListener('click', e => {
+  const fx = e.target.dataset && e.target.dataset.fx;
+  if (fx) applyMouse(fx);
+});
+mouseWin.addEventListener('pointerenter', () => mouseFx.resetTrail());
+mouseWin.addEventListener('pointermove', e => {
+  const r = mouseWin.getBoundingClientRect();
+  mouseFx.pointerMove((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
+});
+mouseWin.addEventListener('pointerdown', () => mouseFx.pointerDown());
+
+/* ================= 音乐时钟卡（模拟律动） ================= */
+const clockFx = MacEffectsFactory();
+clockFx.init(document.getElementById('clockCanvas'), document.getElementById('clockCanvas'));
+clockFx.setWallpaperEffect('none');
+clockFx.setClockStyle('crystal');
+document.getElementById('wp3').style.backgroundImage = "url('site-assets/w4-forest.jpg')";
+const CLOCK_NAMES = { crystal: '玲珑幻彩', ripples: '时空波纹', neon: '霓虹灯牌' };
+function applyClock(name) {
+  clockFx.setClockStyle(name);
+  document.getElementById('clockTag').textContent = CLOCK_NAMES[name];
+  document.querySelectorAll('#clockPills button').forEach(b =>
+    b.classList.toggle('on', b.dataset.fx === name));
+}
+document.getElementById('clockPills').addEventListener('click', e => {
+  const fx = e.target.dataset && e.target.dataset.fx;
+  if (fx) applyClock(fx);
+});
+function beatLoop(ts) {
+  const t = ts / 1000;
+  const lvl = 0.30 + 0.22 * Math.abs(Math.sin(t * 1.15));
+  const bands = [0.32, 0.18 + 0.12 * Math.abs(Math.sin(t * 0.8)), 0.09];
+  wallFx.audioData(lvl, bands);
+  mouseFx.audioData(lvl, bands);
+  clockFx.audioData(lvl, bands);
+  requestAnimationFrame(beatLoop);
+}
+requestAnimationFrame(beatLoop);
+
+/* ================= 公开留言：giscus（开启后自动替换下方按钮） ================= */
+const GISCUS_CONFIG = {
+  ready: false,                    // 按 README 配置好 Discussions 与 giscus 后改为 true
+  repo: 'Gsaecy/MacWall-desktop',
+  repoId: '',                      // 例：R_kgDOxxxxxx
+  category: 'Announcements',
+  categoryId: '',                  // 例：DIC_kwDOxxxxxx
+  lang: 'zh-CN'
+};
+function mountGiscus() {
+  const mount = document.getElementById('giscusMount');
+  if (!GISCUS_CONFIG.ready || !GISCUS_CONFIG.repoId || !GISCUS_CONFIG.categoryId) return;
+  document.getElementById('commentFallback').style.display = 'none';
+  const s = document.createElement('script');
+  s.src = 'https://giscus.app/client.js';
+  s.async = true;
+  s.crossOrigin = 'anonymous';
+  s.setAttribute('data-repo', GISCUS_CONFIG.repo);
+  s.setAttribute('data-repo-id', GISCUS_CONFIG.repoId);
+  s.setAttribute('data-category', GISCUS_CONFIG.category);
+  s.setAttribute('data-category-id', GISCUS_CONFIG.categoryId);
+  s.setAttribute('data-mapping', 'pathname');
+  s.setAttribute('data-strict', '0');
+  s.setAttribute('data-reactions-enabled', '1');
+  s.setAttribute('data-emit-metadata', '0');
+  s.setAttribute('data-input-position', 'top');
+  s.setAttribute('data-theme', 'light');
+  s.setAttribute('data-lang', GISCUS_CONFIG.lang);
+  s.setAttribute('data-loading', 'lazy');
+  mount.appendChild(s);
+}
+mountGiscus();
+</script>
+</body>
+</html>

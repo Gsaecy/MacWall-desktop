@@ -1,0 +1,35 @@
+name: 留言 / 反馈
+description: 给麦壳壁纸 MacWall 留言、提建议或反馈问题
+title: "[留言] "
+labels: ["留言"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 留言类型
+      options:
+        - 意见建议
+        - 使用问题
+        - 内容反馈
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: content
+    attributes:
+      label: 留言内容
+      description: 想说什么就写在这里，公开可见。
+      placeholder: 例如：希望增加 XX 特效 / 在 macOS 15 上遇到 XX 问题 / 这张壁纸非常喜欢……
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: MacWall 版本（可选）
+      placeholder: 例如 0.2.0
+  - type: input
+    id: contact
+    attributes:
+      label: 联系方式（可选）
+      description: 如需我们私下回复，可留下邮箱等联系方式。
+      placeholder: 例如 name@example.com
