@@ -80,7 +80,12 @@
     box-shadow: 0 26px 60px rgba(23,36,92,.16);
     container-type: inline-size;
   }
-  .win .wp { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .win .wp {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    /* 壁纸加载失败时的渐变占位，避免黑色背景 */
+    background-image: linear-gradient(135deg, #4f8cff 0%, #6d5dfc 100%);
+  }
   .win .fx { position: absolute; inset: 0; width: 100%; height: 100%; }
   .win .clock { position: absolute; inset: 0; width: 100%; height: 100%; }
 
@@ -344,13 +349,13 @@ setInterval(tickClockText, 10000);
 
 /* ================= Wallpaper effects card ================= */
 const WALL_MAP = {
-  snow:       ['site-assets/hero-wallpaper.jpg',    'Snow'],
-  petals:     ['site-assets/w3-clouds.jpg',         'Petals'],
+  snow:       ['site-assets/w3-clouds.jpg',         'Snow'],
+  petals:     ['site-assets/effect-wallpaper.jpg',  'Petals'],
   leaves:     ['site-assets/w2-leaves.jpg',         'Leaves'],
   dandelions: ['site-assets/w5-grass.jpg',          'Dandelions'],
   fireflies:  ['site-assets/w4-forest.jpg',         'Fireflies'],
-  bubbles:    ['site-assets/effect-wallpaper.jpg',  'Bubbles'],
-  embers:     ['site-assets/effect-wallpaper.jpg',  'Embers'],
+  bubbles:    ['site-assets/hero-wallpaper.jpg',    'Bubbles'],
+  embers:     ['site-assets/mouse-wallpaper.jpg',   'Embers'],
   hearts:     ['site-assets/w6-girl.jpg',           'Hearts']
 };
 const wallFx = MacEffectsFactory();
