@@ -986,11 +986,11 @@ window.MacEffectsFactory = function () {
     else if (mouseEffect === 'fireflyTrail') drawTrailFlies(t, dt);
   }
 
-  /* ================= 音乐时钟（严格复刻 App：玲珑幻彩/时空波纹/霓虹灯牌，浅粉文字） ================= */
+  /* ================= 音乐时钟（严格复刻 App：玲珑幻彩/时空波纹/霓虹灯牌，白色文字） ================= */
   var phase = 0;
   var neonFlowHue = 0;
-  // 时钟文字色：App 预设「浅粉」lightPink = rgb(255,184,204)
-  var CLOCK_INK = [1.00, 0.72, 0.80];
+  // 时钟文字色：白色（网页演示版）
+  var CLOCK_INK = [1.0, 1.0, 1.0];
   var oilFilmPalette = [
     [1.000, 0.702, 0.729], [1.000, 0.875, 0.729], [1.000, 1.000, 0.729],
     [0.729, 1.000, 0.788], [0.729, 0.882, 1.000], [0.820, 0.729, 1.000],
@@ -1181,12 +1181,12 @@ window.MacEffectsFactory = function () {
     clockCtx.textAlign = 'center'; clockCtx.textBaseline = 'middle';
     clockCtx.font = weight + ' ' + fontSize + 'px ' + (mono ? 'ui-monospace, "SF Mono", Menlo, monospace' : '-apple-system, "PingFang SC", sans-serif');
     if (tracking && 'letterSpacing' in clockCtx) { try { clockCtx.letterSpacing = tracking + 'px'; } catch (e) {} }
-    // 1. 外发光（浅粉文字：glowAlpha 0.26 / glowFillAlpha 0.24）
+    // 1. 外发光（白色文字：glowAlpha 0.26 / glowFillAlpha 0.24）
     clockCtx.shadowColor = 'rgba(255,255,255,0.26)';
     clockCtx.shadowBlur = fontSize * 0.14;
     clockCtx.fillStyle = 'rgba(255,255,255,0.24)';
     clockCtx.fillText(text, tx, ty);
-    // 2. 玻璃字形主体（浅粉 0.98）
+    // 2. 玻璃字形主体（白色 0.98）
     clockCtx.shadowColor = 'transparent'; clockCtx.shadowBlur = 0;
     clockCtx.fillStyle = 'rgba(' + (CLOCK_INK[0] * 255 | 0) + ',' + (CLOCK_INK[1] * 255 | 0) + ',' + (CLOCK_INK[2] * 255 | 0) + ',0.98)';
     clockCtx.fillText(text, tx, ty);
