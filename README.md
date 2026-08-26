@@ -31,6 +31,22 @@ A curated collection of publicly available wallpaper engine projects (also liste
 
 > Want another engine listed? Open an [issue](https://github.com/Gsaecy/MacWall-desktop/issues/new?template=feedback.yml) or join the discussion.
 
+## 🧭 Community docs
+
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — how to report bugs, submit new effects, add engines to the directory, and PR conventions
+- [ENGINE_GUIDE.md](./ENGINE_GUIDE.md) — `effects.js` architecture, public API, and a step-by-step guide to building your own wallpaper / mouse / clock effects
+
+## 💭 Join the discussion (GitHub Discussions)
+
+The technology exchange lives in **GitHub Discussions**:
+
+- **💡 Ideas & proposals** — share new effects, architecture thoughts, feature requests
+- **🎨 Show & tell** — post your remixes, forks and custom particle effects
+- **❓ Q&A** — ask anything about `effects.js`, the macOS client engine or the demo page
+- **📢 Announcements** — release notes and community updates
+
+Open [Discussions](https://github.com/Gsaecy/MacWall-desktop/discussions) and say hi. Issues are for bugs and feedback; everything else belongs in Discussions.
+
 ## 💬 Feedback module
 
 The demo page has a public feedback section backed by GitHub:
